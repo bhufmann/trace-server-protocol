@@ -1,0 +1,17 @@
+@startuml
+== Time graph view is open ==
+actor User
+activate "Theia Trace"
+activate "Trace Server"
+User -> "Theia Trace":Navigate in trace 
+"Theia Trace" -> "Trace Server": fetch tree model
+"Trace Server" -> "Theia Trace": success (200)
+loop nbVisibleRows
+"Theia Trace" -> "Trace Server": fetch row model(current time range)
+"Trace Server" -> "Theia Trace": success (200)
+end
+note right: Repeat for all \nvisible rows or \n row cache size
+"Theia Trace" -> "Theia Trace": Visualize tree model
+"Theia Trace" -> "Theia Trace": Visualize tree row models
+note left: Apply styles to states
+@enduml

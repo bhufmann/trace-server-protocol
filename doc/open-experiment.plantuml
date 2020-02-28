@@ -1,0 +1,31 @@
+@startuml
+actor User
+activate "Theia Trace"
+User -> "Theia Trace": Open Experiment
+"Theia Trace" -> "Theia Trace": Trace Server available?
+== Start Trace Server ==
+"Theia Trace" -> "Trace Server": start trace server
+activate "Trace Server"
+"Trace Server" -> "Theia Trace": success
+== Open Experiment ==
+loop nbTraces
+"Theia Trace" -> "Trace Server": Post trace
+"Trace Server" -> "Theia Trace": success (200)
+"Theia Trace" -> "Trace Server": Configure trace
+"Trace Server" -> "Theia Trace": success (200)
+end
+note right: Repeat for all \ntraces in \nexperiment
+"Theia Trace" -> "Trace Server": Create experiment
+"Trace Server" -> "Theia Trace": success (200)
+"Theia Trace" -> "Trace Server": Configure experiment
+"Trace Server" -> "Theia Trace": success (200)
+"Theia Trace" -> "Trace Server": Fetch available data providers
+"Trace Server" -> "Theia Trace": success (200)
+loop nbDataproviders
+"Theia Trace" -> "Trace Server": fetch data provider descriptor
+"Trace Server" -> "Theia Trace": success (200)
+end
+note right: - Name\n- Descritpion \n- ID \n- Capabilities
+"Theia Trace" -> "Theia Trace": Update Trace Explorer
+note right: Show open experiments \n and available data types
+@enduml

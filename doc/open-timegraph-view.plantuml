@@ -1,0 +1,23 @@
+@startuml
+== Experiment is open on Trace Server ==
+== Open time graph view ==
+actor User
+activate "Theia Trace"
+activate "Trace Server"
+User -> "Theia Trace": Open data provider (uuid, dp-id, timegraph)
+"Theia Trace" -> "Theia Trace": Add view to timeline
+"Trace Server" -> "Theia Trace": success(200)
+"Theia Trace" -> "Trace Server": fetch styles
+"Trace Server" -> "Theia Trace": success(200)
+"Theia Trace" -> "Trace Server": fetch tree model
+"Trace Server" -> "Theia Trace": success (200)
+loop nbVisibleRows
+"Theia Trace" -> "Trace Server": fetch row model(current time range)
+"Trace Server" -> "Theia Trace": success (200)
+end
+note right: Repeat for all \nvisible rows or \n row cache size
+"Theia Trace" -> "Theia Trace": Visualize tree model
+note left: Apply styles to tree
+"Theia Trace" -> "Theia Trace": Visualize row models
+note left: Apply styles to states
+@enduml

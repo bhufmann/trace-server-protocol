@@ -1,0 +1,18 @@
+@startuml
+== Experiment is open on Trace Server ==
+== Open Events Table ==
+actor User
+activate "Theia Trace"
+activate "Trace Server"
+User -> "Theia Trace": Open data provider (uuid, dp-id, table)
+"Theia Trace" -> "Theia Trace": Add view to timeline
+"Theia Trace" -> "Trace Server": fetch_columns()
+"Trace Server" -> "Theia Trace": success (200)
+"Theia Trace" -> "Theia Trace": Visualize table columns
+"Theia Trace" -> "Theia Trace": Config table
+note left: - visible columns
+"Theia Trace" -> "Trace Server": fetch_events(columIds, start, nbEvents)
+note right: - events cache size\n- visible columns
+"Trace Server" -> "Theia Trace": success (200)
+"Theia Trace" -> "Theia Trace": Visualize table rows
+@enduml

@@ -1,0 +1,23 @@
+@startuml
+== Experiment is open on Trace Server ==
+== Open Virtual Tree ==
+actor User
+activate "Theia Trace"
+activate "Trace Server"
+User -> User: Select tree data provider
+User -> "Theia Trace": Open data provider (uuid, dp-id, tree)
+"Theia Trace" -> "Theia Trace": Add view to application
+"Theia Trace" -> "Trace Server": fetch_columns()
+"Trace Server" -> "Theia Trace": success (200)
+"Theia Trace" -> "Trace Server": fetch_rows(columIds, start, nbRows)
+note right: - root nodes\n- cache size
+"Trace Server" -> "Theia Trace": success (200)
+"Theia Trace" -> "Theia Trace": Visualize root rows
+User -> User: Expand node
+User -> "Theia Trace": Update data provider (uuid, dp-id, tree)
+"Trace Server" -> "Theia Trace": success (200)
+"Theia Trace" -> "Trace Server": fetch_rows(columIds, start, nbRows)
+note right: - children nodes\n- cache size
+"Trace Server" -> "Theia Trace": success (200)
+"Theia Trace" -> "Theia Trace": Visualize children rows
+@enduml
